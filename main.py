@@ -3,6 +3,9 @@ import functools
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from collections import Counter
 
+from Algorithm import Algorithm
+
+
 def debug_decorator(func):
     """Dekorator logujący wywołania funkcji i jej wynik"""
     @functools.wraps(func)
@@ -112,22 +115,10 @@ def bottom_up_discretization(intervals, labels):
 
 if __name__ == "__main__":
 
-    # Zmień ścieżkę na właściwą
-    file_path = "iris.csv"
+    algo = Algorithm()
+    test_file = "iris.csv"
+    result = algo.discretize_file(test_file)
 
-    # Wczytanie i przygotowanie danych
-    df = load_dataset(file_path)
-    features, labels = separate_features_and_labels(df)
-    features = encode_features(features)
-    labels = encode_labels(labels)
-    features = standardize_features(features)
-
-    # Budowa przedziałów i liczenie par
-    intervals = build_initial_intervals(len(features))
-    separated_count = count_separated_pairs(intervals, labels)
-    print(f"Liczba par odseparowanych w początkowym układzie: {separated_count}")
-
-    # Dyskretyzacja i wynik końcowy
-    final_intervals, final_score = bottom_up_discretization(intervals, labels)
-    print(f"Liczba przedziałów po dyskretyzacji: {len(final_intervals)}")
-    print(f"Liczba odseparowanych par po dyskretyzacji: {final_score}")
+    print("Wynik testu dyskretyzacji:")
+    for key, val in result.items():
+        print(f"{key}: {val}")
