@@ -108,14 +108,14 @@ class Algorithm:
         for attr in attrs:
             bins = [-np.inf] + cuts[attr] + [np.inf]
             intervals = pd.cut(df[attr], bins=bins, right=True)
-            new_df[attr] = intervals.astype(str)
+            new_df[attr] = intervals.astype(str).str.replace(",",";")
         new_df[decision_col] = df[decision_col].values
 
         return new_df, cuts
 
     def save_discretized(self, df: pd.DataFrame, in_filepath: str) -> str:
         dirpath, fname = os.path.split(in_filepath)
-        out_name = "DISC_" + fname
+        out_name = "DISC" + fname
         out_path = os.path.join(dirpath, out_name)
         df.to_csv(out_path, header=False, index=False)
         return out_path
